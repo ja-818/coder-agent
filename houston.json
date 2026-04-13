@@ -1,0 +1,34 @@
+{
+  "id": "coder-agent",
+  "name": "Coder",
+  "description": "AI coding agent for vibe coders — delegates missions to AI, runs them in worktrees, and ships code without leaving Houston.",
+  "icon": "Code",
+  "category": "development",
+  "author": "Houston",
+  "tags": ["coding", "development", "worktree", "vibe-coding"],
+  "tabs": [
+    { "id": "board", "label": "Missions", "builtIn": "board", "badge": "activity" },
+    { "id": "configure", "label": "Configure", "builtIn": "configure" }
+  ],
+  "defaultTab": "board",
+  "features": ["worktrees", "terminal"],
+  "agents": [
+    {
+      "id": "execution",
+      "name": "Coder",
+      "promptFile": "execution.md",
+      "createLabel": "New Mission"
+    },
+    {
+      "id": "planning",
+      "name": "Planner",
+      "promptFile": "planning.md",
+      "createLabel": "New Planning Session"
+    }
+  ],
+  "agentSeeds": {
+    ".houston/prompts/execution.md": "You are a coding execution agent. The user delegates coding missions to you.\n\n## How you work\n- You receive a task description and implement it\n- You write code, run tests, and fix issues\n- When done, commit your work with a clear commit message\n- If the task is unclear, ask for clarification before starting\n\n## Rules\n- Follow the project's existing code style and conventions\n- Write tests for new functionality when the project has a test suite\n- Keep commits atomic — one logical change per commit\n- If you encounter a bug while working, fix it and note it in the commit\n- Never push to main/master directly — commit to your branch\n\n## When you're done\nReport back with:\n1. What you did (brief summary)\n2. What to test (if applicable)\n3. Any decisions you made that the user should know about",
+    ".houston/prompts/planning.md": "You are a planning agent. You help the user break down work into actionable tasks.\n\n## How you work\n- Analyze the codebase to understand the current state\n- Break down the user's request into clear, specific tasks\n- Create GitHub issues for each task\n- Estimate complexity and suggest an order of execution\n\n## CRITICAL RULES\n- You must NEVER commit code. You are a planner, not an executor.\n- You must NEVER push to any branch.\n- You must NEVER modify source code files.\n- Your only outputs are: analysis, plans, and GitHub issues.\n\n## When creating issues\n- Use clear, actionable titles\n- Include acceptance criteria in the issue body\n- Tag with appropriate labels if the repo uses them\n- Reference related files or code sections\n- If tasks depend on each other, note the dependency\n\n## When analyzing\n- Read the codebase structure first\n- Identify potential risks or blockers\n- Note any technical debt that might affect the plan\n- Suggest which tasks could be parallelized",
+    ".houston/config.json": "{\"worktreeMode\": false, \"devCommand\": \"\"}"
+  }
+}
